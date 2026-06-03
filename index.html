@@ -1,219 +1,2562 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/mystyle.css">
-    <title>งานประกันคุณภาพการศึกษาโรงเรียนบ้านบะแค</title>
-    
-    <!-- Favicons -->
-    <link href="img/favicon.png" rel="icon">
-    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
-  </head>
-  <body>    
-    <!--start  banner -->
-    <div class="container">
-      <div class="row">
-        <div class="col col-sm-12 col-md-12">
-          <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-              <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-              <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="img/9.jpg" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">                  
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Space Survivor: หลบอุกกาบาตพิชิตจักรวาล</title>
+    <style>
+        :root {
+            --space-blue: #0B0E26;
+            --purple: #6A1B9A;
+            --gold: #FFD700;
+            --neon-green: #39FF14;
+            --cyan: #00F3FF;
+            --neon-pink: #FF007F;
+            --card-bg: rgba(13, 17, 43, 0.9);
+            --border-glow: 2px solid rgba(0, 243, 255, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--space-blue);
+            color: #ffffff;
+            position: relative;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            display: block;
+            background: radial-gradient(circle at center, #0f143a 0%, #030511 100%);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.25);
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* Screens overlays */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(5, 7, 20, 0.9);
+            z-index: 10;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            opacity: 1;
+            visibility: visible;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism panel */
+        .panel {
+            background: var(--card-bg);
+            border: var(--border-glow);
+            box-shadow: 0 0 35px rgba(0, 243, 255, 0.5), inset 0 0 20px rgba(106, 27, 154, 0.6);
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 520px;
+            width: 100%;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            animation: panelPulse 6s infinite alternate;
+        }
+
+        @keyframes panelPulse {
+            0% { box-shadow: 0 0 25px rgba(0, 243, 255, 0.3), inset 0 0 15px rgba(106, 27, 154, 0.4); }
+            100% { box-shadow: 0 0 40px rgba(0, 243, 255, 0.7), inset 0 0 30px rgba(106, 27, 154, 0.8); }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #fff 30%, var(--cyan) 70%, var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: var(--cyan);
+            font-size: 1rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        /* Custom Neon Buttons */
+        .btn {
+            background: linear-gradient(135deg, var(--purple), #4a148c);
+            color: white;
+            border: 2px solid var(--cyan);
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin: 8px 0;
+            width: 100%;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover, .btn:active {
+            transform: scale(1.03);
+            box-shadow: 0 0 25px var(--cyan);
+            background: linear-gradient(135deg, #4a148c, var(--purple));
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f57f17, #fbc02d);
+            border-color: var(--gold);
+        }
+        .btn-gold:hover {
+            box-shadow: 0 0 25px var(--gold);
+        }
+
+        .btn-cyan {
+            background: linear-gradient(135deg, #006064, #00838f);
+            border-color: var(--cyan);
+        }
+
+        /* Grid Selection */
+        .grid-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+            max-height: 180px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .grid-selection::-webkit-scrollbar {
+            width: 6px;
+        }
+        .grid-selection::-webkit-scrollbar-thumb {
+            background-color: var(--cyan);
+            border-radius: 10px;
+        }
+
+        .selection-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .selection-card:hover {
+            border-color: var(--cyan);
+            background: rgba(0, 243, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .selection-card.selected {
+            border-color: var(--neon-green);
+            background: rgba(57, 255, 20, 0.15);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+        }
+
+        .selection-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .selection-card .icon {
+            font-size: 2rem;
+            margin-bottom: 3px;
+        }
+
+        .selection-card .name {
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .selection-card .price {
+            font-size: 0.7rem;
+            color: var(--gold);
+            margin-top: 2px;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 8px;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-box .val {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--cyan);
+        }
+
+        .stat-box .lbl {
+            font-size: 0.7rem;
+            color: #ccc;
+            text-transform: uppercase;
+        }
+
+        /* Live HUD UI Dashboard Overlay */
+        #game-ui {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 16px;
+        }
+
+        .ui-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .ui-box {
+            background: rgba(11, 14, 38, 0.85);
+            border: 1px solid rgba(0, 243, 255, 0.4);
+            border-radius: 12px;
+            padding: 8px 14px;
+            pointer-events: auto;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 100px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+        }
+
+        .ui-hearts {
+            color: #ff3366;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        .ui-score {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .level-badge {
+            font-size: 0.85rem;
+            color: var(--neon-green);
+        }
+
+        .progress-bar-container {
+            width: 100px;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--neon-green);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Skills Dashboard (Educational Tracker) */
+        #skills-tracker-btn {
+            position: absolute;
+            top: 80px;
+            left: 16px;
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 8px;
+            pointer-events: auto;
+            background: rgba(11, 14, 38, 0.9);
+            color: var(--cyan);
+            border: 1px solid var(--cyan);
+            cursor: pointer;
+            z-index: 6;
+        }
+
+        /* Educational Skill Modal overlay */
+        #skills-modal {
+            background: rgba(5, 7, 20, 0.95);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .skill-progress-row {
+            background: rgba(255,255,255,0.03);
+            padding: 10px;
+            border-radius: 10px;
+            border-left: 4px solid var(--cyan);
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .skill-bar-bg {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--cyan), var(--neon-green));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Virtual Controls for Mobile */
+        #touch-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            pointer-events: none;
+            z-index: 6;
+        }
+
+        .control-zone {
+            pointer-events: auto;
+        }
+
+        #joystick-outer {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(0, 243, 255, 0.4);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+        }
+
+        #joystick-knob {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, var(--cyan) 0%, var(--purple) 100%);
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--cyan);
+            position: absolute;
+            transition: transform 0.05s ease;
+        }
+
+        /* System Buttons Top Right */
+        .system-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .sys-btn {
+            background: rgba(11, 14, 38, 0.85);
+            border: 1px solid rgba(0, 243, 255, 0.4);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            pointer-events: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: all 0.2s ease;
+        }
+
+        .sys-btn:hover {
+            border-color: var(--cyan);
+            transform: scale(1.1);
+        }
+
+        /* COMP-THINKING QUIZ PANEL (CRITICAL FOR EDUCATIONAL PURPOSE) */
+        #quiz-screen {
+            background: rgba(7, 10, 30, 0.96);
+            z-index: 15;
+        }
+
+        .quiz-panel {
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 40px rgba(57, 255, 20, 0.4), inset 0 0 20px rgba(0, 243, 255, 0.2);
+        }
+
+        .quiz-timer {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .quiz-timer-fill {
+            height: 100%;
+            background: var(--neon-pink);
+            width: 100%;
+            transition: width 0.1s linear;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .answer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+        }
+
+        /* AI Guide Speeches bubble */
+        #ai-guide-box {
+            position: absolute;
+            bottom: 140px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+            z-index: 8;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #ai-guide-box.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .ai-bubble {
+            background: rgba(11, 14, 38, 0.9);
+            border: 2px solid var(--neon-green);
+            border-radius: 16px;
+            padding: 8px 14px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 0.85rem;
+            max-width: 180px;
+            box-shadow: 0 4px 15px rgba(57, 255, 20, 0.4);
+            position: relative;
+        }
+
+        .ai-bubble::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 8px 0 8px 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent var(--neon-green);
+            display: block;
+            width: 0;
+        }
+
+        .ai-avatar {
+            font-size: 2.8rem;
+            animation: float 2s infinite alternate ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-8px) rotate(4deg); }
+        }
+
+        /* Rewards */
+        .reward-box-anim {
+            font-size: 5rem;
+            animation: bounceShake 1.5s infinite ease-in-out;
+            cursor: pointer;
+            margin: 15px 0;
+        }
+
+        @keyframes bounceShake {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0); }
+            50% { transform: translateY(-12px) scale(1.08) rotate(4deg); }
+            25%, 75% { transform: rotate(-4deg); }
+        }
+
+        .reward-reveal {
+            font-size: 1.3rem;
+            color: var(--neon-green);
+            font-weight: bold;
+            margin: 15px 0;
+            min-height: 35px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .reward-reveal.show {
+            opacity: 1;
+        }
+
+        /* Certificate Screen Styling */
+        #cert-container {
+            width: 100%;
+            max-width: 600px;
+            background: #ffffff;
+            color: #111111;
+            border-radius: 16px;
+            padding: 25px;
+            border: 8px double #0d47a1;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            position: relative;
+            text-align: center;
+        }
+
+        #cert-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 2px solid #000;
+            margin: 4px;
+            pointer-events: none;
+        }
+
+        .cert-header {
+            font-family: 'Georgia', serif;
+            font-size: 1.8rem;
+            color: #0d47a1;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .cert-sub {
+            font-size: 1rem;
+            color: #444;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .cert-body {
+            font-size: 1rem;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+        .cert-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1565c0;
+            border-bottom: 2px solid #1565c0;
+            display: inline-block;
+            padding: 0 15px 4px 15px;
+            margin: 8px 0;
+        }
+
+        .cert-stamp {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .stamp {
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, var(--gold) 40%, #ff8f00 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            border: 3px dashed white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .cert-meta {
+            text-align: left;
+            font-size: 0.8rem;
+            color: #444;
+            line-height: 1.4;
+        }
+
+        .cert-input {
+            width: 100%;
+            max-width: 280px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid var(--cyan);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        /* Tabs styling */
+        .tabs {
+            display: flex;
+            width: 100%;
+            margin-bottom: 12px;
+            gap: 8px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            background: var(--purple);
+            box-shadow: 0 0 10px var(--purple);
+        }
+
+        /* Achievements Badge List */
+        .badge-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 10px 0;
+            padding-right: 5px;
+        }
+
+        .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 6px;
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .badge-item.unlocked {
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.04);
+        }
+
+        .badge-icon {
+            font-size: 1.5rem;
+            opacity: 0.3;
+        }
+
+        .badge-item.unlocked .badge-icon {
+            opacity: 1;
+            filter: drop-shadow(0 0 4px var(--gold));
+        }
+
+        .badge-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .badge-desc {
+            font-size: 0.65rem;
+            color: #aaa;
+        }
+
+        .how-to {
+            font-size: 0.8rem;
+            line-height: 1.35;
+            color: #ddd;
+            margin: 10px 0;
+            text-align: left;
+            background: rgba(255,255,255,0.02);
+            padding: 8px;
+            border-radius: 10px;
+            border-left: 3px solid var(--cyan);
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.6rem; }
+            .subtitle { font-size: 0.85rem; }
+            .panel { padding: 15px; }
+            .btn { padding: 10px 16px; font-size: 0.95rem; }
+            #touch-controls { padding: 0 15px; bottom: 15px; }
+            #joystick-outer { width: 85px; height: 85px; }
+            #joystick-knob { width: 32px; height: 32px; }
+            .grid-selection { grid-template-columns: repeat(2, 1fr); }
+            #cert-container { padding: 12px; border-width: 4px; }
+            .cert-header { font-size: 1.3rem; }
+            .cert-name { font-size: 1.2rem; }
+            .cert-body { font-size: 0.8rem; }
+            .stamp { width: 50px; height: 50px; font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <!-- Canvas viewport -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- GAME LIVE UI OVERLAY -->
+        <div id="game-ui" style="opacity: 0;">
+            <div class="ui-top">
+                <div class="ui-box">
+                    <span class="ui-hearts" id="ui-hearts">❤️❤️❤️</span>
                 </div>
-              </div>
-              <div class="carousel-item">
-                <img src="img/9.jpg" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">                  
+                <div class="ui-box">
+                    <div class="ui-score" id="ui-score">คะแนน: 0</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="ui-progress"></div>
+                    </div>
                 </div>
-              </div>
-              <div class="carousel-item">
-                <img src="img/9.jpg" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">                  
+                <div class="system-buttons">
+                    <button class="sys-btn" id="sound-toggle-btn" onclick="game.toggleSound()">🔊</button>
+                    <button class="sys-btn" id="pause-btn" onclick="game.togglePause()">⏸️</button>
                 </div>
-              </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
+
+            <!-- Virtual Joystick zone -->
+            <div id="touch-controls">
+                <div class="control-zone">
+                    <div id="joystick-outer">
+                        <div id="joystick-knob"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <!--end  banner -->
-    <!--start  menu2 -->
-    <div class="container">
-      <div class="row">
-        <div class="col col-sm-12 col-md-12">
-          <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+
+        <!-- SKILLS TRACKER BUTTON & MODAL -->
+        <button id="skills-tracker-btn" onclick="openSkillsModal()" style="display:none;">📊 ผลสัมฤทธิ์การเรียนรู้</button>
+        <div id="skills-modal" class="screen hidden">
+            <div class="panel">
+                <h1>📊 ทักษะกระบวนการคิด</h1>
+                <p class="subtitle">วิเคราะห์คะแนนการศึกษาของกัปตัน</p>
+
+                <div class="skills-grid">
+                    <div class="skill-progress-row">
+                        <div class="skill-info">
+                            <span>✅ การสังเกต (Observation)</span>
+                            <span id="skill-obs-pct">0%</span>
+                        </div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" id="skill-obs-bar"></div></div>
+                    </div>
+                    <div class="skill-progress-row">
+                        <div class="skill-info">
+                            <span>✅ การตัดสินใจ (Decision Making)</span>
+                            <span id="skill-dec-pct">0%</span>
+                        </div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" id="skill-dec-bar"></div></div>
+                    </div>
+                    <div class="skill-progress-row">
+                        <div class="skill-info">
+                            <span>✅ การคิดเชิงคำนวณ (Computational)</span>
+                            <span id="skill-comp-pct">0%</span>
+                        </div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" id="skill-comp-bar"></div></div>
+                    </div>
+                    <div class="skill-progress-row">
+                        <div class="skill-info">
+                            <span>✅ การแก้ปัญหา (Problem Solving)</span>
+                            <span id="skill-solv-pct">0%</span>
+                        </div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" id="skill-solv-bar"></div></div>
+                    </div>
+                </div>
+
+                <button class="btn btn-cyan" onclick="closeSkillsModal()">◀️ กลับสู่สถานีหลัก</button>
+            </div>
+        </div>
+
+        <!-- AI SPACE GUIDE VOICE OVERLAY -->
+        <div id="ai-guide-box">
+            <div class="ai-bubble" id="ai-bubble">สวัสดีกัปตัน! พร้อมจะออกสำรวจหรือยัง?</div>
+            <div class="ai-avatar">🤖</div>
+        </div>
+
+        <!-- MAIN MENU SCREEN -->
+        <div id="menu-screen" class="screen">
+            <div class="panel">
+                <h1>🚀 Space Survivor</h1>
+                <p class="subtitle">หลบอุกกาบาตพิชิตจักรวาล</p>
+
+                <div class="tabs">
+                    <div class="tab active" onclick="switchMenuTab('modes')">โหมดการฝึกฝน</div>
+                    <div class="tab" onclick="switchMenuTab('shop')">อู่ต่อยานยนต์</div>
+                    <div class="tab" onclick="switchMenuTab('achievements')">ตราเกียรติยศ</div>
+                </div>
+
+                <!-- Tab content: MODES -->
+                <div id="tab-modes" class="menu-tab-content">
+                    <div class="how-to">
+                        <strong>เรียนรู้ทักษะผ่านเกม:</strong> สังเกตทิศทาง วางแผนเชิงคำนวณ ถอดรหัสชุดตัวเลขฉุกเฉิน และบังคับยานเพื่อรับแต้มดวงดาววิเศษ!
+                    </div>
+                    <button class="btn" onclick="startGame('story')">🎬 โหมดเนื้อเรื่องผจญภัย (20 ด่าน)</button>
+                    <button class="btn btn-cyan" onclick="startGame('endless')">🌌 โหมดฝึกฝนไร้ขีดจำกัด (Endless)</button>
+                    <button class="btn btn-cyan" onclick="openSkillsModalMenu()">📊 รายงานประเมินผลทักษะการเรียนรู้</button>
+                </div>
+
+                <!-- Tab content: SHOP -->
+                <div id="tab-shop" class="menu-tab-content" style="display: none;">
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="val" id="shop-coins">0</div>
+                            <div class="lbl">🪙 เหรียญคาร์บอน</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="val" id="shop-gems">0</div>
+                            <div class="lbl">💎 อัญมณีแร่ดารา</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #ccc;">สะสมเหรียญเพื่อปลดล็อกลำอัปเกรดประสิทธิภาพสูง</p>
+                    <div class="grid-selection" id="skin-grid"></div>
+                </div>
+
+                <!-- Tab content: ACHIEVEMENTS -->
+                <div id="tab-achievements" class="menu-tab-content" style="display: none;">
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="val" id="ach-highscore">0</div>
+                            <div class="lbl">คะแนนสูงสุด</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="val" id="ach-totalgames">0</div>
+                            <div class="lbl">ชั่วโมงบินรวม</div>
+                        </div>
+                    </div>
+                    <div class="badge-list" id="achievements-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMP-THINKING / DECISION INTERACTIVE QUIZ (THE LESSON INJECTOR) -->
+        <div id="quiz-screen" class="screen hidden">
+            <div class="panel quiz-panel">
+                <h1 id="quiz-topic" style="color: var(--neon-green);">💻 ถอดรหัสลับคำนวณวาร์ป</h1>
+                <p class="subtitle" id="quiz-sub-topic">การตรวจจับรูปแบบ (Pattern Recognition)</p>
+                <div class="quiz-timer">
+                    <div class="quiz-timer-fill" id="quiz-timer-fill"></div>
+                </div>
+                <div class="question-text" id="quiz-question">คำนวณตำแหน่งเพื่อสร้างเกราะกำบังอนุกรมหลักถัดไป: [3, 6, 12, 24, ?]</div>
+                <div class="answer-grid" id="quiz-answers">
+                    <!-- Buttons injected via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PAUSE SCREEN -->
+        <div id="pause-screen" class="screen hidden">
+            <div class="panel">
+                <h1>ควบคุมดาวเทียมหลัก</h1>
+                <p class="subtitle">ระบบวิเคราะห์ข้อมูลความเร็วหยุดพัก</p>
+                <button class="btn" onclick="game.togglePause()">▶️ ปลดการระงับ</button>
+                <button class="btn btn-cyan" onclick="exitToMenu()">🏠 ถอนตัวสู่ฐานทัพ</button>
+            </div>
+        </div>
+
+        <!-- GAME OVER SCREEN -->
+        <div id="gameover-screen" class="screen hidden">
+            <div class="panel">
+                <h1 style="color: var(--neon-pink); text-shadow: 0 0 15px rgba(255,0,127,0.5);">สัญญาณขาดหาย</h1>
+                <p class="subtitle" id="gameover-title">ยานอวกาศชนสิ่งกีดขวางเสียหาย</p>
+                
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="val" id="go-score">0</div>
+                        <div class="lbl">คะแนนสะสมคอร์</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="val" id="go-level">1</div>
+                        <div class="lbl">ระดับความรู้สูงสุด</div>
+                    </div>
+                </div>
+
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="val" id="go-coins">+0</div>
+                        <div class="lbl">🪙 เหรียญคาร์บอน</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="val" id="go-gems">+0</div>
+                        <div class="lbl">💎 อัญมณีดารา</div>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="restartCurrentGame()">🔄 ลองจัดวางแผนอีกรอบ</button>
+                <button class="btn btn-cyan" onclick="exitToMenu()">🏠 กลับหน้าหลัก</button>
+            </div>
+        </div>
+
+        <!-- STAGE CLEAR / LEVEL UP SCREEN -->
+        <div id="clear-screen" class="screen hidden">
+            <div class="panel">
+                <h1 style="color: var(--neon-green); text-shadow: 0 0 15px rgba(57,255,20,0.5);">ก้าวหน้าทางวิชาการ!</h1>
+                <p class="subtitle" id="clear-world-name">ผ่านการคัดกรองด่านสำเร็จ</p>
+
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="val" id="clear-bonus">0</div>
+                        <div class="lbl">โบนัสพิทักษ์ดวงดาว</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-gold" id="clear-next-btn" onclick="proceedToNextLevel()">🚀 เดินทางสู่เขตอวกาศถัดไป</button>
+                <button class="btn btn-cyan" onclick="exitToMenu()">🏠 พักผ่อนและวิเคราะห์</button>
+            </div>
+        </div>
+
+        <!-- REWARD MODAL SCREEN -->
+        <div id="reward-modal" class="screen hidden">
+            <div class="panel">
+                <h1 style="color: var(--gold);">🎉 กล่องรางวัลผู้กล้า!</h1>
+                <p class="subtitle">คะแนนคิดเชิงคำนวณสำเร็จ</p>
+                <p style="color: #aaa; font-size: 0.85rem; margin-bottom: 10px;">สัมผัสกล่องสมบัติเพื่อตรวจรับรางวัลสกินและวัตถุดิบก่อสร้างยาน</p>
+                
+                <div class="reward-box-anim" id="reward-chest" onclick="openRewardChest()">🎁</div>
+                <div class="reward-reveal" id="reward-text">ยินดีด้วย! คุณสังเกตเฉียบแหลม</div>
+
+                <button class="btn btn-gold hidden" id="reward-claim-btn" onclick="closeRewardScreen()">🌟 จัดเก็บเข้าคลัง</button>
+            </div>
+        </div>
+
+        <!-- CERTIFICATE EXPORT SCREEN -->
+        <div id="cert-screen" class="screen hidden">
+            <div class="panel" id="cert-input-panel">
+                <h1>🏆 เกียรติบัตรนักสำรวจอัจฉริยะ</h1>
+                <p class="subtitle">คุณผ่านการอบรมทักษะการคิด 20 ระดับ!</p>
+                <p style="margin-bottom: 15px; font-size: 0.85rem; color: #ccc;">พิมพ์ชื่อของคุณเพื่อแต่งตั้งเป็นผู้พิทักษ์อวกาศและประเมินเกียรติประวัติของคุณ</p>
+                <input type="text" id="student-name-input" class="cert-input" placeholder="พิมพ์ชื่อ-นามสกุลของคุณ" maxlength="30">
+                <button class="btn btn-gold" onclick="generateCertificate()">🎨 เขียนเกียรติบัตรดิจิทัล</button>
+            </div>
+
+            <!-- Printable Certificate View -->
+            <div id="cert-container" class="hidden">
+                <div class="cert-header">เกียรติบัตรผู้พิชิตอวกาศและการคำนวณ</div>
+                <div class="cert-sub">SPACE SURVIVOR EDUCATIONAL ACADEMY</div>
+                <div class="cert-body">
+                    ขอมอบเกียรติคุณบัตรรับรองฉบับนี้ไว้เพื่อแสดงว่า<br>
+                    <div class="cert-name" id="cert-name-view">กิตติพงศ์ จักรวาลวิทยา</div><br>
+                    ได้เสร็จสิ้นหลักสูตรอัจฉริยะภาพ <strong>การคิดวิเคราะห์อย่างมีระบบ (ครบ 20 ด่าน)</strong><br>
+                    ด้วยประสิทธิภาพการคำนวณ แก้ไขปัญหา และหลบหลีกในสภาวะฉุกเฉินระดับยอดเยี่ยม
+                </div>
+                <div class="cert-stamp">
+                    <div class="cert-meta">
+                        <strong>ระดับเกียรติคุณ:</strong> พลทหารวิจัยขั้นที่ 20<br>
+                        <strong>ทักษะภาพรวม:</strong> ยอดเยี่ยม (A+)<br>
+                        <strong>รหัสสากลดาวอังคาร:</strong> <span id="cert-score-view">9,999</span>
+                    </div>
+                    <div class="stamp">🎖️</div>
+                </div>
+            </div>
             
-              โรงเรียนบ้านบะแค อบจ.ขอนแก่น
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link " href="index.html">Home <span class="sr-only">(current)</span></a>
-                </li>                
-              </ul>
-              <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
-            </div>
-          </nav>
+            <button class="btn btn-cyan hidden" id="cert-print-btn" onclick="window.print()" style="max-width: 400px; margin-top: 15px;">🖨️ พิมพ์เกียรติบัตร (PDF)</button>
+            <button class="btn btn-gold hidden" id="cert-done-btn" onclick="exitToMenu()" style="max-width: 400px; margin-top: 10px;">🏠 พากองยานกลับสถานีหลัก</button>
         </div>
-      </div>
-    </div>
-    <!--end  menu -->
-    <!--start  main -->
-    <div class="container">
-             <!--start content -->
-        <div class="col-12">
-  <br>
-    <div class="alert alert-info" role="alert">
-    VTR ถ่ายโอนโรงเรียนบ้านบะแคเข้า อบจ.ขอนแก่น
-  </div>
-
-   <div class="text-left">            
-        </div>
-        <br><iframe width="100%" height="480" src="https://www.youtube.com/embed/cQtLcDYeu-k" title="ถ่ายโอนโรงเรียนบ้านบะแคเข้า อบจ.ขอนแก่น" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      <br><br>
-    <div class="alert alert-info" role="alert">
-    VTR นำเสนอข้อมูลในงานประกันคุณภาพสถานศึกษาเพื่อเข้ารับการประเมินภายนอก ครั้งที่ 5
-  </div>
-
-  <div class="text-left">            
-        </div>
-        <br><iframe width="100%" height="480" src="https://www.youtube.com/embed/hIDxMBo9WxI" title="นำเสนอข้อมูลในงานประกันคุณภาพสถานศึกษาเพื่อเข้ารับการประเมินภายนอก ครั้งที่ 5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      <br><br>
-    <div class="alert alert-info" role="alert">
-    ข้อมูลพื้นฐานโรงเรียนบ้านบะแค
-  </div>
-        <div class="row">    
-    <div class="col-12 col-md-4" style="margin-bottom: 20px;">
-      <div class="card" style="width: 100%;">
-        <img src="img/b1.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">ข้อมูลโรงเรียน</h5>
-          <a href="bbkdata.html" class="btn btn-primary btn-sm" target="_blank">อ่าน เพิ่มเติม..</a>               
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-12 col-md-4" style="margin-bottom: 20px;">
-      <div class="card" style="width: 100%;">
-        <img src="img/s1.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">ผลงานโรงเรียน</h5>
-          <a href="arw.html" class="btn btn-primary btn-sm" target="_blank">อ่าน เพิ่มเติม..</a>
-        </div>
-      </div>
     </div>
 
-    <div class="col-12 col-md-4" style="margin-bottom: 20px;">
-      <div class="card" style="width: 100%;">
-        <img src="img/b5.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">SAR ปีการศึกษา 2565-2567</h5>
-          <a href="sar.html" class="btn btn-primary btn-sm" target="_blank">อ่าน เพิ่มเติม..</a>
-        </div>
-      </div>
-    </div>
+    <!-- MAIN SOUND GENERATOR USING WEB AUDIO API -->
+    <script>
+        class SoundSystem {
+            constructor() {
+                this.ctx = null;
+                this.muted = false;
+            }
 
-    <div class="col-12 col-md-4" style="margin-bottom: 20px;">
-      <div class="card" style="width: 100%;">
-        <img src="img/b2.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">หลักสูตรสถานศึกษา</h5>
-          <a href="course.html" class="btn btn-primary btn-sm" target="_blank">อ่าน เพิ่มเติม..</a>
-          
-        </div>
-      </div>
-    </div>
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            }
 
-    <div class="col-12 col-md-4" style="margin-bottom: 20px;">
-      <div class="card" style="width: 100%;">
-        <img src="img/b3.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">แผนปฏิบัติการสถานศึกษา</h5>
-          <a href="plan.html" class="btn btn-primary btn-sm" target="_blank">อ่าน เพิ่มเติม..</a>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-12 col-md-4" style="margin-bottom: 20px;">
-      <div class="card" style="width: 100%;">
-        <img src="img/q1.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">ผลสัมฤทธิ์ทางการศึกษา</h5>
-          <a href="https://drive.google.com/drive/folders/1T7DRDtymnlhR0crvy1vxoNPuly07SXJR" class="btn btn-primary btn-sm" target="_blank">อ่าน เพิ่มเติม..</a>
-        </div>
-      </div>
-    </div>  
+            playEngine() {
+                if (this.muted) return;
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(60, this.ctx.currentTime);
+                gain.gain.setValueAtTime(0.01, this.ctx.currentTime);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.1);
+            }
 
-    <div class="col-12 col-md-4" style="margin-bottom: 20px;">
-      <div class="card" style="width: 100%;">
-        <img src="img/q2.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">ประชาสัมพันธ์กิจกรรมสถานศึกษา</h5>
-          <a href="pic.html" class="btn btn-primary btn-sm" target="_blank">อ่าน เพิ่มเติม..</a>
-          </div>
-      </div>
-    </div>
-    
-    <div class="col-12 col-md-4" style="margin-bottom: 20px;">
-      <div class="card" style="width: 100%;">
-        <img src="img/b41.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">การศึกษาปฐมวัย</h5>
-          <a href="index1.html" class="btn btn-primary btn-sm" target="_blank">อ่าน เพิ่มเติม..</a>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-12 col-md-4" style="margin-bottom: 20px;">
-      <div class="card" style="width: 100%;">
-        <img src="img/b4.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">ระดับการศึกษาขั้นพื้นฐาน</h5>
-          <a href="index2.html" class="btn btn-primary btn-sm" target="_blank">อ่าน เพิ่มเติม..</a>
-        </div>
-      </div>
-    </div>
+            playCoin() {
+                if (this.muted) return;
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, this.ctx.currentTime);
+                osc.frequency.setValueAtTime(880, this.ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.2);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.25);
+            }
 
+            playGem() {
+                if (this.muted) return;
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(987.77, this.ctx.currentTime);
+                osc.frequency.setValueAtTime(1318.51, this.ctx.currentTime + 0.06);
+                osc.frequency.setValueAtTime(1567.98, this.ctx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.35);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.4);
+            }
 
-        </div>
-        <!--end  main  -->
-        
-        <!--start  footer -->
-        <div class="container-fluid" style="background-color: #e3f2fd;">
-          
-            <div class="col-12 col-sm-12 col-md-12">
-              <p align="center" class="myfooter"> โรงเรียนบ้านบะแค สังกัดองค์การบริหารส่วนจังหวัดขอนแก่น ตำบลแวงใหญ่ อำเภอแวงใหญ่ จังหวัดขอนแก่น 40330 </p>             
-            </div>
-          
-        </div>
-        <!--end  footer -->
-      </body>
-    </html>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="js/jquery-3.3.1.slim.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+            playExplosion() {
+                if (this.muted) return;
+                this.init();
+                const bufferSize = this.ctx.sampleRate * 0.4;
+                const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                const noise = this.ctx.createBufferSource();
+                noise.buffer = buffer;
+
+                const filter = this.ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(800, this.ctx.currentTime);
+                filter.frequency.exponentialRampToValueAtTime(20, this.ctx.currentTime + 0.35);
+
+                const gain = this.ctx.createGain();
+                gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.4);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.ctx.destination);
+                noise.start();
+                noise.stop(this.ctx.currentTime + 0.4);
+            }
+
+            playShield() {
+                if (this.muted) return;
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(200, this.ctx.currentTime);
+                osc.frequency.linearRampToValueAtTime(1200, this.ctx.currentTime + 0.4);
+                gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.45);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.45);
+            }
+
+            playBossWarning() {
+                if (this.muted) return;
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(120, this.ctx.currentTime);
+                osc.frequency.setValueAtTime(100, this.ctx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.4);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.45);
+            }
+
+            playVictory() {
+                if (this.muted) return;
+                this.init();
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.1);
+                    gain.gain.setValueAtTime(0.08, this.ctx.currentTime + idx * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.1 + 0.25);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + idx * 0.1);
+                    osc.stop(this.ctx.currentTime + idx * 0.1 + 0.3);
+                });
+            }
+
+            playGameOver() {
+                if (this.muted) return;
+                this.init();
+                const notes = [392.00, 349.23, 311.13, 261.63];
+                notes.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.15);
+                    gain.gain.setValueAtTime(0.1, this.ctx.currentTime + idx * 0.15);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.15 + 0.3);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + idx * 0.15);
+                    osc.stop(this.ctx.currentTime + idx * 0.15 + 0.35);
+                });
+            }
+        }
+
+        const sound = new SoundSystem();
+    </script>
+
+    <!-- STATE, EDUCATION SKILLS DATA & CONTROLLER -->
+    <script>
+        const SKINS = [
+            { id: 'classic', name: 'Classic Rocket', icon: '🚀', price: 0, unlocked: true },
+            { id: 'ufo', name: 'UFO🛸', icon: '🛸', price: 200, unlocked: false },
+            { id: 'robot', name: 'Robot Ship🤖', icon: '🤖', price: 500, unlocked: false },
+            { id: 'cat', name: 'Cat Rocket🐱', icon: '🐱', price: 1000, unlocked: false },
+            { id: 'rainbow', name: 'Rainbow Rocket🌈', icon: '🌈', price: 2000, unlocked: false },
+            { id: 'golden', name: 'Golden Rocket👑', icon: '👑', price: 5000, unlocked: false }
+        ];
+
+        const ACHIEVEMENTS = [
+            { id: 'rookie', title: '🥉 Space Rookie', desc: 'สะสมคะแนนครบ 100 คะแนน', target: 100, solved: false },
+            { id: 'collector', title: '🥈 Star Collector', desc: 'สะสมดวงดาวรวม 20 ดวง', target: 20, solved: false },
+            { id: 'master', title: '🥇 Asteroid Master', desc: 'หลบหลีกอุกกาบาตครบ 150 ลูก', target: 150, solved: false },
+            { id: 'hero', title: '👑 Galaxy Hero', desc: 'โค่นล้ม Meteor King (ด่าน 10)', target: 10, solved: false },
+            { id: 'champion', title: '🚀 Space Champion', desc: 'โค่นล้ม Asteroid Titan (ด่าน 20)', target: 20, solved: false },
+            { id: 'legend', title: '🌌 Cosmic Legend', desc: 'ทำคะแนนอาร์เคดทะลุ 5,000 คะแนน', target: 5000, solved: false }
+        ];
+
+        const WORLDS = [
+            { name: "🌎 Earth Orbit", range: [1, 4], desc: "แรงดึงดูดปานกลาง อุกกาบาตเคลื่อนที่ช้า" },
+            { name: "🌙 Moon Zone", range: [5, 8], desc: "แรงโน้มถ่วงต่ำ มินิบอสอวกาศระดับต้น" },
+            { name: "🪐 Saturn Ring", range: [9, 12], desc: "พายุวงแหวนดาวเสาร์ บอสใหญ่ Meteor King" },
+            { name: "🌌 Galaxy Storm", range: [13, 16], desc: "พายุกาแล็กซี มฤตยูอุกกาบาตความเร็วสูง" },
+            { name: "🕳 Black Hole Universe", range: [17, 20], desc: "ความยากสุดขั้ว เผชิญหน้ากับ Asteroid Titan" }
+        ];
+
+        // Educational Quizzes Dataset (Learning Computational Thinking)
+        const EDUCATIONAL_QUIZZES = [
+            {
+                type: 'pattern',
+                topic: '💻 การจดจำรูปแบบ (Pattern Recognition)',
+                question: 'ถอดรหัสระยะห่างดาวดวงถัดไป: 2, 4, 8, 16, [?]',
+                answers: ['20', '32', '24', '64'],
+                correct: '32',
+                explanation: 'รูปแบบคือการคูณ 2 ในทุก ๆ พจน์'
+            },
+            {
+                type: 'decomposition',
+                topic: '⚙️ การย่อยปัญหา (Decomposition)',
+                question: 'ถ้าต้องหลบหลีกอุกกาบาตขนาดใหญ่ 3 ทิศทาง ควรแก้ปัญหาข้อใดเป็นอันดับแรก?',
+                answers: ['หาทิศทางที่มีที่ว่างสุด', 'ชะลอความเร็วยานทันที', 'ชนลูกที่เล็กที่สุด', 'ยิงขีปนาวุธเดาสุ่ม'],
+                correct: 'หาทิศทางที่มีที่ว่างสุด',
+                explanation: 'การสลายปัญหาเริ่มจากการแบ่งพื้นที่และหาจุดปลอดภัย'
+            },
+            {
+                type: 'algorithm',
+                topic: '📜 การออกแบบอัลกอริทึม (Algorithm)',
+                question: 'หากสร้างหุ่นยนต์เก็บดาว คำสั่งใดเรียงลำดับถูกตามหลักโปรแกรมมิ่ง?',
+                answers: ['ตรวจสอบพิกัด -> เดินหน้า -> เก็บไอเทม', 'เก็บไอเทม -> ตรวจสอบพิกัด -> เดินหน้า', 'เดินหน้า -> ตรวจสอบพิกัด -> หมุนรอบตัว', 'หยุดทำงาน -> เก็บไอเทม -> หมุนตัว'],
+                correct: 'ตรวจสอบพิกัด -> เดินหน้า -> เก็บไอเทม',
+                explanation: 'อัลกอริทึมที่ถูกต้องช่วยลดการทำงานที่ซ้ำซ้อน'
+            },
+            {
+                type: 'abstraction',
+                topic: '🔍 การคิดเชิงนามธรรม (Abstraction)',
+                question: 'จุดประสงค์ที่แท้จริงของการหลบภัยอวกาศเมื่อพลังชีวิตเหลือน้อยคืออะไร?',
+                answers: ['รักษาชีวิตเพื่อทำเป้าหมายสำเร็จ', 'การเก็บดวงดาวให้ครบถ้วน', 'การยิงบอสให้พัง', 'การถ่ายภาพดวงจันทร์'],
+                correct: 'รักษาชีวิตเพื่อทำเป้าหมายสำเร็จ',
+                explanation: 'การมองข้ามองค์ประกอบย่อยเพื่อมุ่งเน้นจุดประสงค์หลักคือ Abstraction'
+            },
+            {
+                type: 'pattern',
+                topic: '💻 การวิเคราะห์แนวโน้มชุดข้อมูล (Pattern)',
+                question: 'พยากรณ์พายุสุริยะครั้งถัดไป: 10:00, 10:30, 11:00, [?]',
+                answers: ['11:15', '11:30', '12:00', '11:45'],
+                correct: '11:30',
+                explanation: 'พายุเกิดขึ้นทุกๆ 30 นาที เป็นระบบรูปแบบที่แน่นอน'
+            }
+        ];
+
+        // Global State (Persistent in localstorage)
+        let state = {
+            coins: 0,
+            gems: 0,
+            highScore: 0,
+            totalGames: 0,
+            currentSkin: 'classic',
+            unlockedSkins: ['classic'],
+            unlockedAchievements: [],
+            starsCollected: 0,
+            asteroidsDodged: 0,
+            // Skill Scores for dashboard
+            obsScore: 10,  // Observation
+            decScore: 10,  // Decision
+            compScore: 10, // Computational Thinking
+            solvScore: 10  // Problem Solving
+        };
+
+        function loadSave() {
+            const saved = localStorage.getItem('space_survivor_v2');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    state = { ...state, ...parsed };
+                    if (!state.unlockedSkins.includes(state.currentSkin)) {
+                        state.currentSkin = 'classic';
+                    }
+                    SKINS.forEach(s => {
+                        s.unlocked = state.unlockedSkins.includes(s.id);
+                    });
+                    ACHIEVEMENTS.forEach(a => {
+                        a.solved = state.unlockedAchievements.includes(a.id);
+                    });
+                } catch(e) {
+                    console.log("Error loading save", e);
+                }
+            }
+        }
+
+        function saveGame() {
+            localStorage.setItem('space_survivor_v2', JSON.stringify(state));
+            updateMenuUI();
+        }
+
+        function updateMenuUI() {
+            document.getElementById('shop-coins').innerText = state.coins;
+            document.getElementById('shop-gems').innerText = state.gems;
+            document.getElementById('ach-highscore').innerText = state.highScore;
+            document.getElementById('ach-totalgames').innerText = state.totalGames;
+            
+            // Render skins
+            const skinGrid = document.getElementById('skin-grid');
+            skinGrid.innerHTML = '';
+            SKINS.forEach(skin => {
+                const card = document.createElement('div');
+                card.className = `selection-card ${skin.unlocked ? '' : 'locked'} ${state.currentSkin === skin.id ? 'selected' : ''}`;
+                
+                let priceText = '';
+                if (!skin.unlocked) {
+                    priceText = `🪙 ${skin.price}`;
+                } else if (state.currentSkin === skin.id) {
+                    priceText = 'ใช้งานอยู่';
+                } else {
+                    priceText = 'เลือก';
+                }
+
+                card.innerHTML = `
+                    <div class="icon">${skin.icon}</div>
+                    <div class="name">${skin.name}</div>
+                    <div class="price">${priceText}</div>
+                `;
+
+                card.onclick = () => {
+                    if (skin.unlocked) {
+                        state.currentSkin = skin.id;
+                        saveGame();
+                    } else {
+                        if (state.coins >= skin.price) {
+                            state.coins -= skin.price;
+                            state.unlockedSkins.push(skin.id);
+                            skin.unlocked = true;
+                            state.currentSkin = skin.id;
+                            sound.playVictory();
+                            saveGame();
+                            triggerAIGuide("ว้าว! ปรับระบบโครงสร้างยานลำใหม่สมบูรณ์ยอดเยี่ยม!");
+                        } else {
+                            triggerAIGuide("พิกัดแร่ธาตุไม่พอสำหรับการแปลงยานลำนี้!");
+                        }
+                    }
+                };
+                skinGrid.appendChild(card);
+            });
+
+            // Render Achievements
+            const achList = document.getElementById('achievements-list');
+            achList.innerHTML = '';
+            ACHIEVEMENTS.forEach(ach => {
+                const item = document.createElement('div');
+                item.className = `badge-item ${ach.solved ? 'unlocked' : ''}`;
+                item.innerHTML = `
+                    <div class="badge-icon">🏆</div>
+                    <div>
+                        <div class="badge-title" style="color:${ach.solved ? 'var(--gold)' : '#888'}">${ach.title}</div>
+                        <div class="badge-desc">${ach.desc}</div>
+                    </div>
+                `;
+                achList.appendChild(item);
+            });
+        }
+
+        function triggerAIGuide(message) {
+            const box = document.getElementById('ai-guide-box');
+            const bubble = document.getElementById('ai-bubble');
+            bubble.innerText = message;
+            box.classList.add('show');
+            setTimeout(() => {
+                box.classList.remove('show');
+            }, 3500);
+        }
+
+        function switchMenuTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.menu-tab-content').forEach(c => c.style.display = 'none');
+
+            if (tabId === 'modes') {
+                event.target.classList.add('active');
+                document.getElementById('tab-modes').style.display = 'block';
+            } else if (tabId === 'shop') {
+                event.target.classList.add('active');
+                document.getElementById('tab-shop').style.display = 'block';
+            } else if (tabId === 'achievements') {
+                event.target.classList.add('active');
+                document.getElementById('tab-achievements').style.display = 'block';
+            }
+        }
+
+        // Skill Modal Actions
+        function openSkillsModal() {
+            document.getElementById('skills-modal').classList.remove('hidden');
+            
+            // Render percentages smoothly based on state values (Capped at 100)
+            const obsVal = Math.min(100, Math.floor(state.obsScore));
+            const decVal = Math.min(100, Math.floor(state.decScore));
+            const compVal = Math.min(100, Math.floor(state.compScore));
+            const solvVal = Math.min(100, Math.floor(state.solvScore));
+
+            document.getElementById('skill-obs-pct').innerText = `${obsVal}%`;
+            document.getElementById('skill-obs-bar').style.width = `${obsVal}%`;
+
+            document.getElementById('skill-dec-pct').innerText = `${decVal}%`;
+            document.getElementById('skill-dec-bar').style.width = `${decVal}%`;
+
+            document.getElementById('skill-comp-pct').innerText = `${compVal}%`;
+            document.getElementById('skill-comp-bar').style.width = `${compVal}%`;
+
+            document.getElementById('skill-solv-pct').innerText = `${solvVal}%`;
+            document.getElementById('skill-solv-bar').style.width = `${solvVal}%`;
+        }
+
+        function openSkillsModalMenu() {
+            openSkillsModal();
+        }
+
+        function closeSkillsModal() {
+            document.getElementById('skills-modal').classList.add('hidden');
+        }
+    </script>
+
+    <!-- CORE GAME CLASS -->
+    <script>
+        class GameEngine {
+            constructor() {
+                this.canvas = document.getElementById('gameCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.width = 480;
+                this.height = 800;
+                this.canvas.width = this.width;
+                this.canvas.height = this.height;
+
+                this.mode = 'menu'; // menu, story, endless
+                this.isPlaying = false;
+                this.isPaused = false;
+                
+                // Entities
+                this.player = null;
+                this.asteroids = [];
+                this.collectibles = [];
+                this.particles = [];
+                this.boss = null;
+
+                // Live Progression Status
+                this.score = 0;
+                this.coinsEarned = 0;
+                this.gemsEarned = 0;
+                this.level = 1;
+                this.worldIndex = 0;
+                this.lives = 3;
+                this.lastScoreMilestone = 0;
+                
+                // Loops
+                this.lastTime = 0;
+                this.spawnTimer = 0;
+                this.collectibleTimer = 0;
+                
+                // Educational Quiz Timer & Flow control
+                this.activeQuiz = null;
+                this.quizTimerLimit = 10; // seconds
+                this.quizTimerElapsed = 0;
+                this.quizTriggeredForLevel = false;
+
+                // Starry Backdrops
+                this.stars = [];
+                this.initStars();
+
+                // Virtual Touch Joystick
+                this.joystick = {
+                    active: false,
+                    startX: 0,
+                    startY: 0,
+                    dirX: 0,
+                    dirY: 0
+                };
+                this.setupInput();
+                window.addEventListener('resize', () => this.resizeCanvas());
+                this.resizeCanvas();
+            }
+
+            initStars() {
+                this.stars = [];
+                for (let i = 0; i < 50; i++) {
+                    this.stars.push({
+                        x: Math.random() * this.width,
+                        y: Math.random() * this.height,
+                        size: Math.random() * 2.5 + 0.5,
+                        speed: Math.random() * 2 + 0.5,
+                        color: ['#ffffff', '#00FFFF', '#FF00FF', '#FFFF00'][Math.floor(Math.random() * 4)]
+                    });
+                }
+            }
+
+            resizeCanvas() {
+                const container = document.getElementById('game-container');
+                const ratio = this.width / this.height;
+                let newWidth = container.clientWidth;
+                let newHeight = container.clientHeight;
+
+                if (newWidth / newHeight > ratio) {
+                    newWidth = newHeight * ratio;
+                } else {
+                    newHeight = newWidth / ratio;
+                }
+
+                this.canvas.style.width = `${newWidth}px`;
+                this.canvas.style.height = `${newHeight}px`;
+            }
+
+            setupInput() {
+                this.keys = {};
+                window.addEventListener('keydown', e => {
+                    this.keys[e.code] = true;
+                    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+                        e.preventDefault();
+                    }
+                });
+                window.addEventListener('keyup', e => {
+                    this.keys[e.code] = false;
+                });
+
+                const getCoords = (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                    return {
+                        x: ((clientX - rect.left) / rect.width) * this.width,
+                        y: ((clientY - rect.top) / rect.height) * this.height
+                    };
+                };
+
+                this.canvas.addEventListener('mousemove', e => {
+                    if (this.isPlaying && !this.isPaused && !this.joystick.active) {
+                        const coords = getCoords(e);
+                        if (this.player) {
+                            this.player.targetX = coords.x;
+                            this.player.targetY = coords.y;
+                        }
+                    }
+                });
+
+                // Virtual Touch Joystick
+                const outer = document.getElementById('joystick-outer');
+                const knob = document.getElementById('joystick-knob');
+
+                outer.addEventListener('touchstart', e => {
+                    this.joystick.active = true;
+                    const touch = e.touches[0];
+                    this.joystick.startX = touch.clientX;
+                    this.joystick.startY = touch.clientY;
+                    e.preventDefault();
+                }, { passive: false });
+
+                window.addEventListener('touchmove', e => {
+                    if (!this.joystick.active) return;
+                    const touch = e.touches[0];
+                    let dx = touch.clientX - this.joystick.startX;
+                    let dy = touch.clientY - this.joystick.startY;
+                    const maxDist = 35;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+
+                    if (dist > maxDist) {
+                        dx = (dx / dist) * maxDist;
+                        dy = (dy / dist) * maxDist;
+                    }
+
+                    knob.style.transform = `translate(${dx}px, ${dy}px)`;
+                    this.joystick.dirX = dx / maxDist;
+                    this.joystick.dirY = dy / maxDist;
+                }, { passive: false });
+
+                const stopJoystick = () => {
+                    this.joystick.active = false;
+                    knob.style.transform = 'translate(0px, 0px)';
+                    this.joystick.dirX = 0;
+                    this.joystick.dirY = 0;
+                };
+
+                window.addEventListener('touchend', stopJoystick);
+                window.addEventListener('touchcancel', stopJoystick);
+            }
+
+            toggleSound() {
+                sound.muted = !sound.muted;
+                document.getElementById('sound-toggle-btn').innerText = sound.muted ? "🔇" : "🔊";
+            }
+
+            togglePause() {
+                if (!this.isPlaying) return;
+                this.isPaused = !this.isPaused;
+                const pauseScreen = document.getElementById('pause-screen');
+                if (this.isPaused) {
+                    pauseScreen.classList.remove('hidden');
+                } else {
+                    pauseScreen.classList.add('hidden');
+                    this.lastTime = performance.now();
+                }
+            }
+
+            start(mode) {
+                this.mode = mode;
+                this.isPlaying = true;
+                this.isPaused = false;
+                this.score = 0;
+                this.coinsEarned = 0;
+                this.gemsEarned = 0;
+                this.level = mode === 'story' ? 1 : 5;
+                this.worldIndex = 0;
+                this.lives = 3;
+                this.lastScoreMilestone = 0;
+                this.asteroids = [];
+                this.collectibles = [];
+                this.particles = [];
+                this.boss = null;
+                this.quizTriggeredForLevel = false;
+                
+                this.player = new Player(this.width / 2, this.height - 120, state.currentSkin);
+                this.determineWorld();
+
+                // CSS Layout changes
+                document.getElementById('menu-screen').classList.add('hidden');
+                document.getElementById('gameover-screen').classList.add('hidden');
+                document.getElementById('clear-screen').classList.add('hidden');
+                document.getElementById('reward-modal').classList.add('hidden');
+                document.getElementById('cert-screen').classList.add('hidden');
+                
+                document.getElementById('game-ui').style.opacity = "1";
+                document.getElementById('skills-tracker-btn').style.display = "block";
+                this.updateLiveUI();
+
+                triggerAIGuide(`เริ่มพิทักษ์จักรวาล! ใช้ 'การสังเกต' จับตาดูสีของอุกกาบาตให้ดีนะครับ!`);
+                sound.playVictory();
+
+                this.lastTime = performance.now();
+                requestAnimationFrame((t) => this.loop(t));
+            }
+
+            determineWorld() {
+                if (this.mode !== 'story') {
+                    this.worldIndex = 4;
+                    return;
+                }
+                for (let i = 0; i < WORLDS.length; i++) {
+                    const range = WORLDS[i].range;
+                    if (this.level >= range[0] && this.level <= range[1]) {
+                        if (this.worldIndex !== i) {
+                            this.worldIndex = i;
+                            triggerAIGuide(`บรรลุถึงอาณาเขต: ${WORLDS[i].name}!`);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            updateLiveUI() {
+                let heartsText = '';
+                for (let i = 0; i < 3; i++) {
+                    heartsText += i < this.lives ? '❤️' : '🖤';
+                }
+                document.getElementById('ui-hearts').innerText = heartsText;
+                document.getElementById('ui-score').innerText = `คะแนน: ${this.score}`;
+                
+                if (this.mode === 'story') {
+                    this.levelProgress = Math.min(100, (this.score / (this.level * 500)) * 100);
+                    document.getElementById('ui-progress').style.width = `${this.levelProgress}%`;
+                } else {
+                    document.getElementById('ui-progress').style.width = `100%`;
+                }
+            }
+
+            loop(time) {
+                if (!this.isPlaying) return;
+                
+                let dt = (time - this.lastTime) / 1000;
+                if (dt > 0.1) dt = 0.1; 
+                this.lastTime = time;
+
+                if (!this.isPaused) {
+                    this.update(dt);
+                    this.draw();
+                }
+
+                requestAnimationFrame((t) => this.loop(t));
+            }
+
+            update(dt) {
+                // Background scrolling speed according to boost
+                const speedMult = (this.player && this.player.isBoosting ? 3 : 1);
+                this.stars.forEach(star => {
+                    star.y += star.speed * (1 + this.worldIndex * 0.25) * speedMult;
+                    if (star.y > this.height) {
+                        star.y = 0;
+                        star.x = Math.random() * this.width;
+                    }
+                });
+
+                this.spawnTimer += dt;
+                this.collectibleTimer += dt;
+
+                const spawnInterval = Math.max(0.4, 1.3 - (this.level * 0.05));
+                if (this.spawnTimer > spawnInterval) {
+                    this.spawnTimer = 0;
+                    this.spawnAsteroid();
+                }
+
+                if (this.collectibleTimer > 2.0) {
+                    this.collectibleTimer = 0;
+                    this.spawnCollectible();
+                }
+
+                // Update Player
+                if (this.player) {
+                    this.player.update(dt, this.keys, this.joystick, this.width, this.height);
+                    if (Math.random() < 0.15) {
+                        this.spawnParticle(this.player.x, this.player.y + 18, '#FF5722', 2, 2);
+                    }
+                }
+
+                // Update Boss
+                if (this.boss) {
+                    this.boss.update(dt, this.width, this.player);
+                    if (Math.random() < 0.04) {
+                        const angle = Math.atan2(this.player.y - this.boss.y, this.player.x - this.boss.x);
+                        this.asteroids.push(new Asteroid(this.boss.x, this.boss.y + 40, 16, 220, 'electric', angle));
+                    }
+                } else {
+                    // Boss Spawning Criteria
+                    const targetScore = this.level * 500;
+                    if (this.mode === 'story' && this.score >= targetScore * 0.4) {
+                        if ([5, 10, 15, 20].includes(this.level) && !this.boss) {
+                            this.spawnBoss();
+                        }
+                    }
+                }
+
+                // EDUCATIONAL FEATURE: Trigger computational thinking quiz during half-way of each story level
+                if (this.mode === 'story' && !this.quizTriggeredForLevel) {
+                    const targetScore = this.level * 500;
+                    if (this.score >= targetScore * 0.5) {
+                        this.quizTriggeredForLevel = true;
+                        this.triggerQuizChallenge();
+                    }
+                }
+
+                // Update Asteroids
+                for (let i = this.asteroids.length - 1; i >= 0; i--) {
+                    const ast = this.asteroids[i];
+                    ast.update(dt);
+                    
+                    if (this.player && !this.player.isInvincible && this.checkCircleCollision(this.player, ast)) {
+                        this.handlePlayerHit(ast);
+                        this.asteroids.splice(i, 1);
+                        continue;
+                    }
+
+                    if (ast.y > this.height + ast.r) {
+                        this.asteroids.splice(i, 1);
+                        state.asteroidsDodged++;
+                        state.obsScore += 0.3; // Increment observation score for perfect dodging
+                        this.addScore(2);
+                        continue;
+                    }
+                }
+
+                // Update Collectibles
+                for (let i = this.collectibles.length - 1; i >= 0; i--) {
+                    const col = this.collectibles[i];
+                    col.update(dt);
+
+                    if (this.player && this.checkCircleCollision(this.player, col)) {
+                        this.handleCollect(col);
+                        this.collectibles.splice(i, 1);
+                        continue;
+                    }
+
+                    if (col.y > this.height + col.r) {
+                        this.collectibles.splice(i, 1);
+                    }
+                }
+
+                // Particles life decay
+                for (let i = this.particles.length - 1; i >= 0; i--) {
+                    const p = this.particles[i];
+                    p.update(dt);
+                    if (p.life <= 0) this.particles.splice(i, 1);
+                }
+
+                // Level Complete validation
+                if (this.mode === 'story') {
+                    const targetScore = this.level * 500;
+                    if (this.score >= targetScore) {
+                        if (!this.boss) {
+                            this.triggerLevelClear();
+                        }
+                    }
+                }
+
+                this.checkAchievements();
+            }
+
+            draw() {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+
+                // Stars
+                this.stars.forEach(star => {
+                    this.ctx.fillStyle = star.color;
+                    this.ctx.fillRect(star.x, star.y, star.size, star.size);
+                });
+
+                // Ambient Background Decor (Observation booster)
+                this.drawSpaceBackgroundDecoration();
+
+                this.collectibles.forEach(col => col.draw(this.ctx));
+                this.asteroids.forEach(ast => ast.draw(this.ctx));
+                if (this.boss) this.boss.draw(this.ctx);
+                this.particles.forEach(p => p.draw(this.ctx));
+                if (this.player) this.player.draw(this.ctx);
+
+                // Draw Interactive HUD Shields
+                if (this.player && this.player.shieldTimer > 0) {
+                    this.ctx.beginPath();
+                    this.ctx.arc(this.player.x, this.player.y, this.player.r + 15, 0, Math.PI * 2);
+                    this.ctx.strokeStyle = 'rgba(0, 243, 255, 0.7)';
+                    this.ctx.lineWidth = 3;
+                    this.ctx.shadowBlur = 12;
+                    this.ctx.shadowColor = '#00F3FF';
+                    this.ctx.stroke();
+                    this.ctx.shadowBlur = 0;
+                }
+            }
+
+            drawSpaceBackgroundDecoration() {
+                // Nebula cloud vector drawing
+                this.ctx.fillStyle = 'rgba(106, 27, 154, 0.12)';
+                this.ctx.beginPath();
+                this.ctx.arc(80, 200, 150, 0, Math.PI * 2);
+                this.ctx.fill();
+
+                if (this.worldIndex >= 2) {
+                    // Planetary rings
+                    this.ctx.strokeStyle = 'rgba(0, 243, 255, 0.08)';
+                    this.ctx.lineWidth = 6;
+                    this.ctx.beginPath();
+                    this.ctx.ellipse(380, 150, 90, 20, Math.PI / 4, 0, Math.PI * 2);
+                    this.ctx.stroke();
+                }
+            }
+
+            spawnAsteroid() {
+                let x = Math.random() * this.width;
+                let sizeRoll = Math.random();
+                let type = 'small';
+                let r = 16;
+                let speed = Math.random() * 90 + 90 + (this.level * 7);
+
+                if (sizeRoll > 0.93) {
+                    type = 'electric';
+                    r = 24;
+                } else if (sizeRoll > 0.83) {
+                    type = 'giant';
+                    r = 42;
+                } else if (sizeRoll > 0.68) {
+                    type = 'fire';
+                    r = 26;
+                } else if (sizeRoll > 0.52) {
+                    type = 'ice';
+                    r = 22;
+                } else if (sizeRoll > 0.32) {
+                    type = 'medium';
+                    r = 28;
+                }
+
+                if (Math.abs(x - (this.player ? this.player.x : this.width / 2)) < 40) {
+                    x += 65;
+                    if (x > this.width) x = 30;
+                }
+
+                this.asteroids.push(new Asteroid(x, -40, r, speed, type));
+            }
+
+            spawnCollectible() {
+                let x = Math.random() * (this.width - 40) + 20;
+                let roll = Math.random();
+                let type = 'star';
+
+                if (roll > 0.94) {
+                    type = 'rocket'; 
+                } else if (roll > 0.86) {
+                    type = 'shield';
+                } else if (roll > 0.78) {
+                    type = 'heart';
+                } else if (roll > 0.65) {
+                    type = 'gem';
+                } else if (roll > 0.45) {
+                    type = 'coin';
+                }
+
+                this.collectibles.push(new Collectible(x, -30, type));
+            }
+
+            spawnBoss() {
+                let name = "👾 Mini Boss";
+                let maxHp = 60;
+                let skin = '🛸';
+                
+                if (this.level === 10) {
+                    name = "👑 Meteor King";
+                    maxHp = 160;
+                    skin = '☄️';
+                } else if (this.level === 15) {
+                    name = "👾 Galaxy Monster";
+                    maxHp = 260;
+                    skin = '🤖';
+                } else if (this.level === 20) {
+                    name = "☄️ Asteroid Titan";
+                    maxHp = 500;
+                    skin = '👾';
+                }
+
+                this.boss = new Boss(this.width / 2, -80, name, maxHp, skin);
+                sound.playBossWarning();
+                triggerAIGuide(`ตรวจพบสัญญาณระดับบอส ${name}! วิเคราะห์การกระแทกและหลบหลีกด่วน!`);
+            }
+
+            spawnParticle(x, y, color, count = 8, speed = 3) {
+                for (let i = 0; i < count; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const spd = Math.random() * speed + 1;
+                    this.particles.push(new Particle(x, y, color, angle, spd));
+                }
+            }
+
+            checkCircleCollision(c1, c2) {
+                const dx = c1.x - c2.x;
+                const dy = c1.y - c2.y;
+                return Math.sqrt(dx*dx + dy*dy) < (c1.r + c2.r);
+            }
+
+            addScore(amount) {
+                this.score += amount;
+                this.updateLiveUI();
+
+                // Reward milestone check (Every 100 points)
+                const currentMilestone = Math.floor(this.score / 100);
+                if (currentMilestone > this.lastScoreMilestone) {
+                    this.lastScoreMilestone = currentMilestone;
+                    this.triggerRewardScreen();
+                }
+            }
+
+            handlePlayerHit(ast) {
+                if (this.player.isInvincible) return;
+
+                sound.playExplosion();
+                this.spawnParticle(this.player.x, this.player.y, '#FF0055', 20, 6);
+                this.shakeScreen();
+
+                this.lives--;
+                state.decScore = Math.max(10, state.decScore - 2); // Decrement decision accuracy on hit
+                this.updateLiveUI();
+
+                if (this.lives <= 0) {
+                    this.triggerGameOver();
+                } else {
+                    this.player.isInvincible = true;
+                    this.player.invincibilityTimer = 1.6;
+                    triggerAIGuide("ระบบตัวถังเสียหาย! เปลี่ยนใจหลบหลีกไปแนวอื่นดีกว่า!");
+                }
+            }
+
+            shakeScreen() {
+                const container = document.getElementById('gameCanvas');
+                container.style.transform = 'translate(6px, 6px)';
+                setTimeout(() => container.style.transform = 'translate(-6px, -6px)', 50);
+                setTimeout(() => container.style.transform = 'translate(6px, -6px)', 100);
+                setTimeout(() => container.style.transform = 'translate(0px, 0px)', 150);
+            }
+
+            handleCollect(col) {
+                state.decScore += 1.5; // Up decision making metrics
+                switch(col.type) {
+                    case 'star':
+                        this.addScore(10);
+                        state.starsCollected++;
+                        sound.playCoin();
+                        this.spawnParticle(col.x, col.y, varString('--gold'), 6, 2);
+                        break;
+                    case 'coin':
+                        state.coins += 20;
+                        this.coinsEarned += 20;
+                        sound.playCoin();
+                        this.spawnParticle(col.x, col.y, varString('--gold'), 6, 2);
+                        break;
+                    case 'gem':
+                        state.gems += 50;
+                        this.gemsEarned += 50;
+                        sound.playGem();
+                        this.spawnParticle(col.x, col.y, varString('--cyan'), 10, 3);
+                        break;
+                    case 'heart':
+                        if (this.lives < 3) {
+                            this.lives++;
+                            this.updateLiveUI();
+                        }
+                        sound.playShield();
+                        this.spawnParticle(col.x, col.y, '#ff3366', 8, 2);
+                        break;
+                    case 'shield':
+                        this.player.shieldTimer = 7;
+                        sound.playShield();
+                        this.spawnParticle(col.x, col.y, varString('--cyan'), 12, 3);
+                        break;
+                    case 'rocket':
+                        this.player.isBoosting = true;
+                        this.player.boostTimer = 4.5;
+                        this.player.isInvincible = true;
+                        this.player.invincibilityTimer = 4.5;
+                        sound.playVictory();
+                        this.spawnParticle(col.x, col.y, varString('--neon-green'), 20, 5);
+                        triggerAIGuide("สุดยอด! แร่ไฮเปอร์ดริฟต์ทำให้ยานวาร์ปไร้เทียมทาน!");
+                        break;
+                }
+            }
+
+            // TRIGGER THE COMPUTATIONAL THINKING INTERACTIVE QUIZ
+            triggerQuizChallenge() {
+                this.isPaused = true;
+                
+                // Randomize education quiz from dataset
+                const quiz = EDUCATIONAL_QUIZZES[Math.floor(Math.random() * EDUCATIONAL_QUIZZES.length)];
+                this.activeQuiz = quiz;
+                this.quizTimerElapsed = 0;
+
+                document.getElementById('quiz-topic').innerText = quiz.topic;
+                document.getElementById('quiz-question').innerText = quiz.question;
+
+                // Render Answer Options
+                const answersContainer = document.getElementById('quiz-answers');
+                answersContainer.innerHTML = '';
+                
+                quiz.answers.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn';
+                    btn.innerText = opt;
+                    btn.onclick = () => this.handleQuizAnswer(opt);
+                    answersContainer.appendChild(btn);
+                });
+
+                // Display screen
+                document.getElementById('quiz-screen').classList.remove('hidden');
+                
+                // Launch timer countdown loop for fast response checking
+                this.quizTimerInterval = setInterval(() => {
+                    this.quizTimerElapsed += 0.1;
+                    const progress = ((this.quizTimerLimit - this.quizTimerElapsed) / this.quizTimerLimit) * 100;
+                    document.getElementById('quiz-timer-fill').style.width = `${Math.max(0, progress)}%`;
+
+                    if (this.quizTimerElapsed >= this.quizTimerLimit) {
+                        this.handleQuizAnswer(null); // Timeout (unanswered)
+                    }
+                }, 100);
+            }
+
+            handleQuizAnswer(answer) {
+                clearInterval(this.quizTimerInterval);
+                document.getElementById('quiz-screen').classList.add('hidden');
+                this.isPaused = false;
+                this.lastTime = performance.now();
+
+                if (answer === this.activeQuiz.correct) {
+                    sound.playVictory();
+                    state.compScore += 12; // Computational thinking score bump
+                    state.solvScore += 10; // Problem Solving skill improvement
+                    state.coins += 100; // In-game rewards
+
+                    // Give player temporal super shields as success incentive
+                    this.player.shieldTimer = 6;
+                    this.spawnParticle(this.player.x, this.player.y, varString('--neon-green'), 30, 6);
+                    
+                    triggerAIGuide("เก่งมากกัปตัน! ปล่อยพลังงานโล่วาร์ปวิเคราะห์ถูกทางสำเร็จ!");
+                } else {
+                    sound.playExplosion();
+                    state.compScore = Math.max(10, state.compScore - 4);
+                    state.solvScore = Math.max(10, state.solvScore - 2);
+
+                    // Punish with screen tremor or losing temporary control
+                    this.shakeScreen();
+                    triggerAIGuide("รหัสคำนวณพลาดไปเล็กน้อย! บาเรียล้มเหลว ระวังยานชน!");
+                }
+                saveGame();
+            }
+
+            triggerRewardScreen() {
+                this.isPaused = true;
+                const modal = document.getElementById('reward-modal');
+                const text = document.getElementById('reward-text');
+                const btn = document.getElementById('reward-claim-btn');
+                const chest = document.getElementById('reward-chest');
+
+                text.classList.remove('show');
+                btn.classList.add('hidden');
+                chest.classList.remove('hidden');
+                chest.innerText = '🎁';
+                
+                modal.classList.remove('hidden');
+                sound.playVictory();
+            }
+
+            triggerGameOver() {
+                this.isPlaying = false;
+                sound.playGameOver();
+                
+                state.totalGames++;
+                if (this.score > state.highScore) state.highScore = this.score;
+                saveGame();
+
+                document.getElementById('go-score').innerText = this.score;
+                document.getElementById('go-level').innerText = this.level;
+                document.getElementById('go-coins').innerText = `+${this.coinsEarned}`;
+                document.getElementById('go-gems').innerText = `+${this.gemsEarned}`;
+                
+                document.getElementById('gameover-screen').classList.remove('hidden');
+            }
+
+            triggerLevelClear() {
+                this.isPlaying = false;
+                sound.playVictory();
+
+                const bonus = this.level * 150;
+                state.coins += bonus;
+                saveGame();
+
+                document.getElementById('clear-bonus').innerText = `+${bonus} เหรียญคาร์บอน`;
+                document.getElementById('clear-world-name').innerText = WORLDS[this.worldIndex].name;
+                
+                document.getElementById('clear-screen').classList.remove('hidden');
+            }
+
+            checkAchievements() {
+                ACHIEVEMENTS.forEach(ach => {
+                    if (ach.solved) return;
+                    
+                    let condition = false;
+                    switch(ach.id) {
+                        case 'rookie': condition = this.score >= ach.target; break;
+                        case 'collector': condition = state.starsCollected >= ach.target; break;
+                        case 'master': condition = state.asteroidsDodged >= ach.target; break;
+                        case 'hero': condition = this.level >= ach.target; break;
+                        case 'champion': condition = this.level >= ach.target && this.mode === 'story'; break;
+                        case 'legend': condition = this.score >= ach.target && this.mode === 'endless'; break;
+                    }
+
+                    if (condition) {
+                        ach.solved = true;
+                        state.unlockedAchievements.push(ach.id);
+                        saveGame();
+                        triggerAIGuide(`ความสำเร็จถูกปลดล็อก: ${ach.title}!`);
+                    }
+                });
+            }
+        }
+
+        function varString(name) {
+            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        }
+
+        // PLAYER ENTITY
+        class Player {
+            constructor(x, y, skinId) {
+                this.x = x;
+                this.y = y;
+                this.r = 20;
+                this.skinId = skinId;
+                
+                this.speed = 360;
+                this.targetX = x;
+                this.targetY = y;
+
+                this.isInvincible = false;
+                this.invincibilityTimer = 0;
+                this.shieldTimer = 0;
+                this.isBoosting = false;
+                this.boostTimer = 0;
+            }
+
+            update(dt, keys, joystick, boundsW, boundsH) {
+                if (this.invincibilityTimer > 0) {
+                    this.invincibilityTimer -= dt;
+                    if (this.invincibilityTimer <= 0) this.isInvincible = false;
+                }
+
+                if (this.shieldTimer > 0) {
+                    this.shieldTimer -= dt;
+                    this.isInvincible = true;
+                    if (this.shieldTimer <= 0) this.isInvincible = false;
+                }
+
+                if (this.boostTimer > 0) {
+                    this.boostTimer -= dt;
+                    if (this.boostTimer <= 0) this.isBoosting = false;
+                }
+
+                let dx = 0;
+                let dy = 0;
+                if (keys['ArrowLeft'] || keys['KeyA']) dx = -1;
+                if (keys['ArrowRight'] || keys['KeyD']) dx = 1;
+                if (keys['ArrowUp'] || keys['KeyW']) dy = -1;
+                if (keys['ArrowDown'] || keys['KeyS']) dy = 1;
+
+                if (dx !== 0 || dy !== 0) {
+                    const spd = this.isBoosting ? this.speed * 1.7 : this.speed;
+                    this.x += dx * spd * dt;
+                    this.y += dy * spd * dt;
+                    this.targetX = this.x;
+                    this.targetY = this.y;
+                } else if (joystick.active) {
+                    const spd = this.isBoosting ? this.speed * 1.7 : this.speed;
+                    this.x += joystick.dirX * spd * dt;
+                    this.y += joystick.dirY * spd * dt;
+                    this.targetX = this.x;
+                    this.targetY = this.y;
+                } else {
+                    const lerpFactor = 0.16;
+                    this.x += (this.targetX - this.x) * lerpFactor;
+                    this.y += (this.targetY - this.y) * lerpFactor;
+                }
+
+                this.x = Math.max(this.r, Math.min(boundsW - this.r, this.x));
+                this.y = Math.max(this.r, Math.min(boundsH - this.r, this.y));
+            }
+
+            draw(ctx) {
+                if (this.isInvincible && Math.floor(Date.now() / 80) % 2 === 0) return;
+
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                const skin = SKINS.find(s => s.id === this.skinId);
+                const emoji = skin ? skin.icon : '🚀';
+
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = varString('--cyan');
+
+                ctx.font = `${this.r * 2.2}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(emoji, 0, 0);
+
+                ctx.restore();
+            }
+        }
+
+        // ASTEROID ENTITY
+        class Asteroid {
+            constructor(x, y, r, speed, type, customAngle = null) {
+                this.x = x;
+                this.y = y;
+                this.r = r;
+                this.speed = speed;
+                this.type = type;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotSpeed = Math.random() * 2.5 - 1.25;
+                this.angle = customAngle !== null ? customAngle : Math.PI / 2;
+            }
+
+            update(dt) {
+                this.x += Math.cos(this.angle) * this.speed * dt;
+                this.y += Math.sin(this.angle) * this.speed * dt;
+                this.rotation += this.rotSpeed * dt;
+            }
+
+            draw(ctx) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+
+                let emoji = '🪨';
+
+                switch(this.type) {
+                    case 'giant':
+                        emoji = '🪐';
+                        break;
+                    case 'fire':
+                        emoji = '🔥';
+                        ctx.shadowBlur = 12;
+                        ctx.shadowColor = '#FF3D00';
+                        break;
+                    case 'ice':
+                        emoji = '❄️';
+                        ctx.shadowBlur = 12;
+                        ctx.shadowColor = '#00E5FF';
+                        break;
+                    case 'electric':
+                        emoji = '⚡';
+                        ctx.shadowBlur = 12;
+                        ctx.shadowColor = '#FFD600';
+                        break;
+                }
+
+                ctx.font = `${this.r * 2.2}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(emoji, 0, 0);
+
+                ctx.restore();
+            }
+        }
+
+        // COLLECTIBLE ENTITY
+        class Collectible {
+            constructor(x, y, type) {
+                this.x = x;
+                this.y = y;
+                this.type = type;
+                this.r = 14;
+                this.speed = 140;
+                this.pulseTime = 0;
+            }
+
+            update(dt) {
+                this.y += this.speed * dt;
+                this.pulseTime += dt;
+            }
+
+            draw(ctx) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                const scale = 1 + Math.sin(this.pulseTime * 5.5) * 0.15;
+                ctx.scale(scale, scale);
+
+                let emoji = '⭐';
+                switch(this.type) {
+                    case 'star': emoji = '⭐'; break;
+                    case 'coin': emoji = '🪙'; break;
+                    case 'gem': emoji = '💎'; break;
+                    case 'heart': emoji = '❤️'; break;
+                    case 'shield': emoji = '🛡️'; break;
+                    case 'rocket': emoji = '🚀'; break;
+                }
+
+                ctx.font = '24px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(emoji, 0, 0);
+
+                ctx.restore();
+            }
+        }
+
+        // FX PARTICLES
+        class Particle {
+            constructor(x, y, color, angle, speed) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.angle = angle;
+                this.speed = speed;
+                this.r = Math.random() * 2.5 + 1.5;
+                this.life = 1.0;
+                this.decay = Math.random() * 1.6 + 1.2;
+            }
+
+            update(dt) {
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+                this.life -= this.decay * dt;
+            }
+
+            draw(ctx) {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.life);
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // BOSS SYSTEM
+        class Boss {
+            constructor(x, y, name, maxHp, skin) {
+                this.x = x;
+                this.y = y;
+                this.name = name;
+                this.maxHp = maxHp;
+                this.hp = maxHp;
+                this.skin = skin;
+                this.r = 55;
+                this.timer = 0;
+            }
+
+            update(dt, boundsW, player) {
+                this.timer += dt;
+                
+                if (this.y < 110) {
+                    this.y += 45 * dt;
+                }
+
+                // Smooth hover motion
+                this.x = (boundsW / 2) + Math.sin(this.timer * 1.1) * (boundsW / 3.2);
+
+                if (player) {
+                    const dx = this.x - player.x;
+                    const dy = this.y - player.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < (this.r + player.r) && !player.isInvincible) {
+                        game.handlePlayerHit(this);
+                    }
+                }
+            }
+
+            draw(ctx) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                ctx.beginPath();
+                ctx.arc(0, 0, this.r + 8, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255, 0, 127, 0.25)';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.font = '70px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.skin, 0, 0);
+
+                ctx.restore();
+                
+                const barW = 180;
+                const barH = 8;
+                const bx = this.x - barW / 2;
+                const by = this.y - this.r - 15;
+
+                ctx.fillStyle = 'rgba(255,255,255,0.2)';
+                ctx.fillRect(bx, by, barW, barH);
+
+                ctx.fillStyle = 'var(--neon-pink)';
+                const pct = Math.max(0, this.hp / this.maxHp);
+                ctx.fillRect(bx, by, barW * pct, barH);
+            }
+        }
+    </script>
+
+    <!-- INITIALIZATION & ROUTERS -->
+    <script>
+        const game = new GameEngine();
+
+        window.onload = function() {
+            loadSave();
+            updateMenuUI();
+            
+            setTimeout(() => {
+                triggerAIGuide("ยินดีต้อนรับสู่ภารกิจฝึกทักษะการคำนวณและประเมินผลระดับชาติ! สังเกตรูปแบบแล้วลุยไปพร้อมกันครับ!");
+            }, 1000);
+        };
+
+        function startGame(mode) {
+            game.start(mode);
+        }
+
+        function restartCurrentGame() {
+            game.start(game.mode);
+        }
+
+        function exitToMenu() {
+            game.isPlaying = false;
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById('menu-screen').classList.remove('hidden');
+            document.getElementById('game-ui').style.opacity = "0";
+            document.getElementById('skills-tracker-btn').style.display = "none";
+            updateMenuUI();
+        }
+
+        function proceedToNextLevel() {
+            if (game.level < 20) {
+                game.level++;
+                game.start('story');
+            } else {
+                document.getElementById('clear-screen').classList.add('hidden');
+                document.getElementById('cert-screen').classList.remove('hidden');
+                document.getElementById('cert-input-panel').classList.remove('hidden');
+                document.getElementById('cert-container').classList.add('hidden');
+                document.getElementById('cert-print-btn').classList.add('hidden');
+                document.getElementById('cert-done-btn').classList.add('hidden');
+            }
+        }
+
+        function openRewardChest() {
+            const chest = document.getElementById('reward-chest');
+            const text = document.getElementById('reward-text');
+            const btn = document.getElementById('reward-claim-btn');
+
+            sound.playExplosion();
+            chest.innerText = '💥';
+            
+            setTimeout(() => {
+                chest.innerText = '🔓';
+                const rewards = [
+                    { type: 'coins', amount: 160, text: '🪙 ได้รับคาร์บอนโบนัส 160 เหรียญ!' },
+                    { type: 'gems', amount: 40, text: '💎 อัญมณีแร่วาร์ปเพิ่ม 40 ก้อน!' },
+                    { type: 'coins', amount: 250, text: '🪙 เปิดระบบประมวลผลเพิ่ม 250 เหรียญ!' }
+                ];
+
+                const picked = rewards[Math.floor(Math.random() * rewards.length)];
+                
+                if (picked.type === 'coins') state.coins += picked.amount;
+                else if (picked.type === 'gems') state.gems += picked.amount;
+
+                text.innerText = picked.text;
+                text.classList.add('show');
+                btn.classList.remove('hidden');
+                
+                saveGame();
+            }, 750);
+        }
+
+        function closeRewardScreen() {
+            document.getElementById('reward-modal').classList.add('hidden');
+            game.isPaused = false;
+            game.lastTime = performance.now();
+        }
+
+        function generateCertificate() {
+            const nameInput = document.getElementById('student-name-input').value.trim();
+            if (!nameInput) {
+                alert("กัปตันจำต้องระบุชื่อเพื่อบันทึกประวัติการพัฒนา!");
+                return;
+            }
+
+            document.getElementById('cert-name-view').innerText = nameInput;
+            document.getElementById('cert-score-view').innerText = `CT-${Math.floor(1000 + Math.random() * 9000)}`;
+            
+            const today = new Date();
+            document.getElementById('cert-date-view').innerText = today.toLocaleDateString('th-TH');
+
+            document.getElementById('cert-input-panel').classList.add('hidden');
+            document.getElementById('cert-container').classList.remove('hidden');
+            document.getElementById('cert-print-btn').classList.remove('hidden');
+            document.getElementById('cert-done-btn').classList.remove('hidden');
+            
+            sound.playVictory();
+        }
+    </script>
+</body>
+</html>
